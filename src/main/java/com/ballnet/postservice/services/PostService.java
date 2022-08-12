@@ -7,9 +7,11 @@ import com.ballnet.postservice.observers.post.IPostObserver;
 import com.ballnet.postservice.repositories.PostRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -76,5 +78,19 @@ public class PostService {
     postObservers.forEach( postObserver -> {
       postObserver.delete(id);
     });
+  }
+
+  /**
+   * Find one by Id
+   * @param id
+   * @return
+   */
+  public Post findOneById(Long id) {
+    var post = postRepository.findById(id);
+
+    if(post.isPresent())
+      return PostMapper.INSTANCE.toPost(post.get());
+    else
+      throw new EmptyResultDataAccessException(1);
   }
 }

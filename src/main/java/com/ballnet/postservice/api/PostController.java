@@ -37,6 +37,16 @@ public class PostController {
 
   /**
    *
+   * @param id
+   * @return
+   */
+  @GetMapping(value = "/{id}")
+  public ResponseEntity<Post> get(@PathVariable Long id){
+    Post post = postService.findOneById(id);
+    return ResponseEntity.ok(post);
+  }
+  /**
+   *
    * @param createPostRequest
    * @return
    */
