@@ -1,8 +1,7 @@
 package com.ballnet.postservice.api;
 
 import com.ballnet.postservice.models.Post;
-import com.ballnet.postservice.requests.CreatePostRequest;
-import com.ballnet.postservice.requests.UpdatePostRequest;
+import com.ballnet.postservice.requests.PostRequest;
 import com.ballnet.postservice.services.PostService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -20,41 +19,39 @@ public class PostController {
   private final PostService postService;
 
   @GetMapping(value = "/test")
-  public String test(){
+  public String test() {
     return "hello world";
   }
 
   /**
-   *
    * @param userId
    * @return
    */
-  @GetMapping(value = "/user/{userId}")
-  public ResponseEntity<List<Post>> getAll(@PathVariable Long userId){
+  @GetMapping()
+  public ResponseEntity<List<Post>> getAll(@RequestParam Long userId) {
     List<Post> posts = postService.findAllByUserId(userId);
     return ResponseEntity.ok(posts);
   }
 
   /**
-   *
    * @param id
    * @return
    */
   @GetMapping(value = "/{id}")
-  public ResponseEntity<Post> get(@PathVariable Long id){
+  public ResponseEntity<Post> get(@PathVariable Long id) {
     Post post = postService.findOneById(id);
     return ResponseEntity.ok(post);
   }
+
   /**
-   *
-   * @param createPostRequest
+   * @param postRequest
    * @return
    */
   @PostMapping()
-  public ResponseEntity<Post> add(@RequestBody @Validated CreatePostRequest createPostRequest){
+  public ResponseEntity<Post> add(@RequestBody @Validated PostRequest postRequest) {
     Post post = Post.builder()
-        .content(createPostRequest.getContent())
-        .userId(createPostRequest.getUserId())
+        .content(postRequest.getContent())
+        .userId(postRequest.getUserId())
         .build();
 
     var result = postService.add(post);
@@ -62,16 +59,15 @@ public class PostController {
   }
 
   /**
-   *
-   * @param updatePostRequest
+   * @param postRequest
    * @return
    */
-  @PutMapping()
-  public ResponseEntity<Post> update(@RequestBody @Validated UpdatePostRequest updatePostRequest){
+  @PutMapping(value = "/{id}")
+  public ResponseEntity<Post> update(@PathVariable Long id, @RequestBody @Validated PostRequest postRequest) {
     Post post = Post.builder()
-        .content(updatePostRequest.getContent())
-        .userId(updatePostRequest.getUserId())
-        .id(updatePostRequest.getId())
+        .content(postRequest.getContent())
+        .userId(postRequest.getUserId())
+        .id(id)
         .build();
 
     var result = postService.update(post);
@@ -79,12 +75,11 @@ public class PostController {
   }
 
   /**
-   *
    * @param id
    * @return
    */
   @DeleteMapping(value = "/{id}")
-  public ResponseEntity<String> delete(@PathVariable Long id){
+  public ResponseEntity<String> delete(@PathVariable Long id) {
     postService.delete(id);
 
     return ResponseEntity.ok(HttpStatus.OK.toString());

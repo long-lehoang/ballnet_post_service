@@ -12,8 +12,8 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 @EnableFeignClients
 public class PostServiceApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(PostServiceApplication.class, args);
-	}
+  public static void main(String[] args) {
+    SpringApplication.run(PostServiceApplication.class, args);
+  }
 
 }

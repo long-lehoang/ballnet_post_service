@@ -34,7 +34,7 @@ public class GlobalExceptionHandle extends ResponseEntityExceptionHandler {
 
 
   @ExceptionHandler(EmptyResultDataAccessException.class)
-  public ResponseEntity<Object> handleEmptyResultDataAccessException(EmptyResultDataAccessException ex){
+  public ResponseEntity<Object> handleEmptyResultDataAccessException(EmptyResultDataAccessException ex) {
     log.debug(ex.getMessage());
     return ResponseEntity.notFound().build();
   }

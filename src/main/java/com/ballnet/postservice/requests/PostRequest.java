@@ -11,7 +11,7 @@ import javax.validation.constraints.NotEmpty;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreatePostRequest {
+public class PostRequest {
   @NotEmpty
   private String content;
   @NotEmpty

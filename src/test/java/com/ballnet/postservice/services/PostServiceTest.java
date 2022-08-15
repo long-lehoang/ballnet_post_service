@@ -1,9 +1,7 @@
 package com.ballnet.postservice.services;
 
 import com.ballnet.postservice.entities.PostEntity;
-import com.ballnet.postservice.repositories.PostRepository;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import com.ballnet.postservice.repositories.IPostRepository;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,7 +22,7 @@ class PostServiceTest {
   @Autowired
   PostService postService;
   @Autowired
-  PostRepository postRepository;
+  IPostRepository IPostRepository;
 
   @BeforeEach
   void setUp() {
@@ -32,7 +30,7 @@ class PostServiceTest {
 
   @AfterEach
   void tearDown() {
-    postRepository.deleteAll();
+    IPostRepository.deleteAll();
   }
 
   @Test
@@ -43,7 +41,7 @@ class PostServiceTest {
         .userId(1L)
         .build();
 
-    postRepository.save(entity);
+    IPostRepository.save(entity);
 
     var entites = postService.findAllByUserId(entity.getUserId());
     assertFalse(CollectionUtils.isEmpty(entites));
@@ -57,7 +55,7 @@ class PostServiceTest {
         .userId(1L)
         .build();
 
-    postRepository.save(entity);
+    IPostRepository.save(entity);
 
     var entites = postService.findAllByUserId(2L);
     assertTrue(CollectionUtils.isEmpty(entites));

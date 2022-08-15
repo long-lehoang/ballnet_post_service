@@ -7,8 +7,9 @@ import org.mapstruct.factory.Mappers;
 
 @Mapper
 public interface PostMapper {
-  static final PostMapper INSTANCE = Mappers.getMapper(PostMapper.class);
+  PostMapper INSTANCE = Mappers.getMapper(PostMapper.class);
 
   Post toPost(PostEntity postEntity);
+
   PostEntity toPostEntity(Post post);
 }

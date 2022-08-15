@@ -11,11 +11,11 @@ import javax.validation.constraints.NotEmpty;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class UpdatePostRequest {
+public class CommentRequest {
   @NotEmpty
   private String content;
   @NotEmpty
-  private Long userId;
+  private Long postId;
   @NotEmpty
-  private Long id;
+  private Long userId;
 }
